@@ -99,7 +99,6 @@ public class PatientActivity extends Activity {
 		AlertDialog.Builder altDialog= new AlertDialog.Builder(this);
     	altDialog.setMessage(msg); // here add your message
     	altDialog.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-    		@Override
     		public void onClick(DialogInterface dialog, int which) {
     			// TODO Auto-generated method stub
     			
