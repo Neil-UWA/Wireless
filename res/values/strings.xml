@@ -1,0 +1,27 @@
+<resources>
+
+    <string name="app_name">Resp Rate</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">Test Methods</string>
+    <string name="title_activity_display_message">Auth User</string>
+    <string name="number_respiratory">Number of respiratory</string>
+    <string name="button_add">Add</string>
+
+    <!-- values for register page -->
+    <string name="title_activity_register">Register</string>
+    <string name="reg_user_name">User Name</string>
+    <string name="reg_password">Password</string>
+
+    <!-- values for authentication -->
+    <string name="user_name">User Name</string>
+    <string name="password">Password</string>
+
+    <!-- values for patient -->
+    <string name="title">Title</string>
+    <string name="firstName">FirstName</string>
+    <string name="lastName">LastName</string>
+    <string name="title_activity_breathing">Breathing</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_patient">PatientActivity</string>
+
+</resources>

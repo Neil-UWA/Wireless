@@ -1,0 +1,63 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <Button
+        android:id="@+id/buttonStartResp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="76dp"
+        android:text="Start" />
+
+    <Chronometer
+        android:id="@+id/chronometer1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:text="Chronometer"
+        android:textSize="40dp" />
+
+    <Button
+        android:id="@+id/buttonStopResp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonStartResp"
+        android:layout_alignBottom="@+id/buttonStartResp"
+        android:layout_centerHorizontal="true"
+        android:text="Stop" />
+
+    <Button
+        android:id="@+id/buttonResetResp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonStopResp"
+        android:layout_alignBottom="@+id/buttonStopResp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="23dp"
+        android:text="Reset" />
+
+    <EditText
+        android:id="@+id/editTextResp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonStartResp"
+        android:layout_below="@+id/buttonStartResp"
+        android:layout_marginTop="66dp"
+        android:ems="10" >
+    </EditText>
+
+    <Button
+        android:id="@+id/buttonSendResp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editTextResp"
+        android:layout_alignBottom="@+id/editTextResp"
+        android:layout_toRightOf="@+id/editTextResp"
+        android:text="Send" />
+
+</RelativeLayout>
