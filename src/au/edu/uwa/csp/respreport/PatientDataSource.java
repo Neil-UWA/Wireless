@@ -54,10 +54,14 @@ public class PatientDataSource {
 	  Cursor cursor = database.rawQuery("select * from "+ MySQLiteHelper.TABLE_PATIENT + " where " + 
 			  MySQLiteHelper.COLUMN_USERNAME +" = ?" , new String[]{userName});
 	  
-	  cursor.moveToFirst();
-	  Patient patient = cursorToPatient(cursor);
-	  cursor.close();
-	  return patient;
+	  if(cursor.getCount()!=0){
+		  cursor.moveToFirst();
+		  Patient patient = cursorToPatient(cursor);  
+		  cursor.close();		 
+		  return patient;
+	  }
+	  
+	  return null;
   }
   
   public void deletePatient(Patient patient) {

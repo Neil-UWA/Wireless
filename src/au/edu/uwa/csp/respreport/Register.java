@@ -107,7 +107,7 @@ public class Register extends Activity {
 				 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				 startActivity(intent);
 			}	
-		}
+		}else AppFunctions.alertDialog(result, Register.this);
 		
 		
 	}

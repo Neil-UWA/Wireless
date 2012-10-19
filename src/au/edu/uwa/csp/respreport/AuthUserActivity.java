@@ -1,7 +1,7 @@
 package au.edu.uwa.csp.respreport;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 
 import android.app.Activity;
 import android.content.Intent;
@@ -44,16 +44,15 @@ public class AuthUserActivity extends Activity {
 	public void login(View view) {
 		// setContentView(textView);
 
-		//get user name from input
+		// get user name from input
 		EditText edt_user_name = (EditText) findViewById(R.id.user_name);
 		userName = edt_user_name.getText().toString();
 
-		//get password from input
+		// get password from input
 		EditText edt_password = (EditText) findViewById(R.id.password);
 		password = edt_password.getText().toString();
 
-		SOAPTask task = new SOAPTask(AuthUserActivity.this,
-				"AuthUser");
+		SOAPTask task = new SOAPTask(AuthUserActivity.this, "AuthUser");
 		task.addParam("userName", userName);
 		task.addParam("password", password);
 		task.parentActivity = AuthUserActivity.this;
@@ -66,41 +65,57 @@ public class AuthUserActivity extends Activity {
 			e.printStackTrace();
 		}
 
-		result+="";
+		result += "";
 
-		//if authentication succeeded, redirect to new activity
-		if(result.equalsIgnoreCase("OK")){
-			PatientDataSource pds = new PatientDataSource(getApplicationContext());
+		// if authentication succeeded, redirect to new activity
+		if (result.equalsIgnoreCase("OK")) {
+			PatientDataSource pds = new PatientDataSource(
+					getApplicationContext());
 			Patient patient = new Patient();
 			pds.open();
 			patient = pds.getPatient(userName);
 			pds.close();
-			System.out.println("MyID="+patient.getReturnedID()+" "+patient.getUserName());
+			// System.out.println("MyID="+patient.getReturnedID()+" "+patient.getUserName());
 
-			System.out.println("GO is +" + patient.getReturnedID());
+			// System.out.println("GO is +" + patient.getReturnedID());
+			if (patient == null) {
+				List<Patient> patients = FetchPatients
+						.FetchPatientFromWebService(AuthUserActivity.this,
+								userName, password);
 
-			//If it's a doctor, go to doctor view. 
-			if(patient.getTitle().equalsIgnoreCase("doctor")){
-			intent = new Intent(AuthUserActivity.this, PatientsListGraphActivity.class);
-			}else{
-			intent = new Intent(AuthUserActivity.this, BreathingActivity.class);
+				for (Patient patient1 : patients) {
+					if (patient1.getUserName().equalsIgnoreCase(userName)) {
+						patient = patient1;
+						break;
+					}
+				}
 			}
-			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			intent.putExtra(USER_NAME,userName);
-			intent.putExtra(PASSWORD, password);
-			intent.putExtra(PATIENT_ID, patient.getReturnedID());
+			// If it's a doctor, go to doctor view.
+			if (patient != null) {
+				if (patient.getTitle().equalsIgnoreCase("doctor")) {
+					intent = new Intent(AuthUserActivity.this,
+							PatientsListGraphActivity.class);
+				} else {
+					intent = new Intent(AuthUserActivity.this,
+							BreathingActivity.class);
+				}
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				intent.putExtra(USER_NAME, userName);
+				intent.putExtra(PASSWORD, password);
+				intent.putExtra(PATIENT_ID, patient.getReturnedID());
 
-			startActivity(intent);
-		} 
+				startActivity(intent);
+			} else
+				AppFunctions.alertDialog(result, AuthUserActivity.this);
+		}else  AppFunctions.alertDialog("User doesn't exist", AuthUserActivity.this);
 
 	}
 
-	//go to the register view
+	// go to the register view
 	public void goToRegister(View view) {
 		Intent intent = new Intent(this, Register.class);
 		startActivity(intent);
 	}
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

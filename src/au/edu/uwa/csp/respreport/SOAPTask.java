@@ -51,26 +51,8 @@ class SOAPTask extends AsyncTask<String, Void, String> {
 
 		parentActivity.runOnUiThread(new Runnable() {
 			public void run() {
-				alertDialog("Return from call: " + result);
 				response = result;
 				System.out.println("good "+response);
-			}
-
-			public void alertDialog(String msg) {
-				AlertDialog.Builder altDialog = new AlertDialog.Builder(
-						parentActivity);
-				altDialog.setMessage(msg); // here add your message
-				altDialog.setNeutralButton("OK",
-						new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,
-							int which) {
-						// TODO Auto-generated method stub
-
-					}
-				});
-
-				altDialog.show();
-
 			}
 		});
 
