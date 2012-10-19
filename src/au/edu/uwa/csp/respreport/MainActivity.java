@@ -33,6 +33,16 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 	}
 
+	public void goToLogin(View view){
+		Intent intent = new Intent(this, AuthUserActivity.class);
+		startActivity(intent);
+	}
+	
+	public void goToRegister(View view) {
+		Intent intent = new Intent(this, Register.class);
+		startActivity(intent);
+	}
+	
 	public void writeDB(View view) {
 		// Do something in response to button
 		PatientDataSource pds = new PatientDataSource(this);
@@ -49,6 +59,10 @@ public class MainActivity extends Activity {
 		altDialog.show();
 
 	}
-
+	
+	 public void patientGraph(View view) {
+	    	Intent intent = new Intent(this, PatientsListGraphActivity.class);
+	    	startActivity(intent);
+		}
 
 }

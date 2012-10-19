@@ -73,6 +73,28 @@ public class RespiratoryDataSource {
 	    return respiratorys;
 	  }
 
+	  public List<Respiratory> getRespiratoryByPatientIdSortByTime(int patientId) {
+		  List<Respiratory> respiratorys = new ArrayList<Respiratory>();
+		  
+		  // Query by selecting based on patient Id, and sort date mesassured ascending. 
+		  String SELECT_QUERY = "SELECT * FROM " + MySQLiteHelper.TABLE_RESPIRATORY + " WHERE " + 
+				  				MySQLiteHelper.COLUMN_PATIENTID + " = " + patientId + " ORDER BY " + 
+				  				MySQLiteHelper.COLUMN_DATERRMEASURED + " ASC ";
+		  
+		  Cursor cursor = database.rawQuery(SELECT_QUERY, null);
+		  
+		  cursor.moveToFirst();
+		  while(!cursor.isAfterLast()) {
+			  Respiratory Respiratory = cursorToRespiratory(cursor);
+			  respiratorys.add(Respiratory);
+			  cursor.moveToNext();
+		  }
+		  
+		  // Make sure to close the cursor
+		  cursor.close();
+		  return respiratorys;
+	  }
+	  
 	  private Respiratory cursorToRespiratory(Cursor cursor) {
 	    Respiratory Respiratory = new Respiratory();
 	    Respiratory.setId(cursor.getLong(0));
