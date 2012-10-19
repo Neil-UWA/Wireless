@@ -41,7 +41,7 @@ public class AuthUserActivity extends Activity {
 		String method;
 	}
 
-	public void sendMessage(View view) {
+	public void login(View view) {
 		// setContentView(textView);
 
 		//get user name from input
@@ -80,11 +80,11 @@ public class AuthUserActivity extends Activity {
 			System.out.println("GO is +" + patient.getReturnedID());
 
 			//If it's a doctor, go to doctor view. 
-			//if(patient.getTitle().equalsIgnoreCase("doctor")){
-			//intent = new Intent(AuthUserActivity.this, BreathingActivity.class);
-			//}else{
+			if(patient.getTitle().equalsIgnoreCase("doctor")){
+			intent = new Intent(AuthUserActivity.this, PatientsListGraphActivity.class);
+			}else{
 			intent = new Intent(AuthUserActivity.this, BreathingActivity.class);
-			//}
+			}
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			intent.putExtra(USER_NAME,userName);
 			intent.putExtra(PASSWORD, password);

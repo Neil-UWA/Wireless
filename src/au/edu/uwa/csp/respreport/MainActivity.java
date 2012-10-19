@@ -26,29 +26,21 @@ public class MainActivity extends Activity {
 	}
 
 	/** Called when the user clicks the Send button */
-	public void soapMethods(View view) {
-		// Do something in response to button
+	public void goToLogin(View view){
 		Intent intent = new Intent(this, AuthUserActivity.class);
-
 		startActivity(intent);
 	}
-
-	public void writeDB(View view) {
-		// Do something in response to button
-		PatientDataSource pds = new PatientDataSource(this);
-		pds.open();
-		pds.createPatient("go", 1,  "Mr", "David", "Smith");
-		AlertDialog.Builder altDialog= new AlertDialog.Builder(this);
-		altDialog.setMessage("Wrote to DB"); // here add your message
-		altDialog.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub
-
-			}});
-
-		altDialog.show();
-
+	
+	public void goToRegister(View view) {
+		Intent intent = new Intent(this, Register.class);
+		startActivity(intent);
 	}
+	
 
+	
+	 public void patientGraph(View view) {
+	    	Intent intent = new Intent(this, PatientsListGraphActivity.class);
+	    	startActivity(intent);
+		}
 
 }

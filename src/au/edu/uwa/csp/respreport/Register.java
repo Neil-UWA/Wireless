@@ -16,8 +16,12 @@ public class Register extends Activity {
 	public final static String PASSWORD = "com.edu.uwa.csp.respreport.RPASSWORD";
 	private final String ERROR = "Error Registration failed ";
 
+	private String title;
 	private String userName;
+	private long patientId;
 	private String password;
+	private String firstName;
+	private String lastName;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,19 @@ public class Register extends Activity {
 		//get password from input
 		EditText edt_password = (EditText) findViewById(R.id.reg_password);
 		password = edt_password.getText().toString();
+		
+		// setContentView(textView);
+    	EditText edt_title = (EditText) findViewById(R.id.title);
+    	title = edt_title.getText().toString();
+    	
+    	//get user name from input
+    	EditText edt_firstName = (EditText) findViewById(R.id.firstName);
+    	firstName = edt_firstName.getText().toString();
+    	
+    	//get password from input
+    	EditText edt_lastName = (EditText) findViewById(R.id.lastName);
+    	lastName = edt_lastName.getText().toString();
+    	  	
 
 		SOAPTask task = new SOAPTask(Register.this, "RegisterUser");
 		task.addParam("userName", userName);
@@ -49,16 +66,50 @@ public class Register extends Activity {
 			e.printStackTrace();
 		}
 
-		result+="";
+		if(result.equalsIgnoreCase("ok")){
+			SOAPTask newTask = new SOAPTask(Register.this,
+					"AddPatient");
+	    	
+			newTask.addParam("userName", userName);
+			newTask.addParam("password", password);
+			newTask.addParam("title", title);
+			newTask.addParam("firstName", firstName);
+			newTask.addParam("lastName", lastName);
+			newTask.parentActivity = Register.this;
+			newTask.execute();
+			
+			try {
+				result = newTask.get(5, TimeUnit.SECONDS);
+			} catch (Exception e) {
+				result = ERROR;
+				e.printStackTrace();
+			}
 
-		//if authentication succeeded, redirect to new activity
-		if(result.equalsIgnoreCase("OK")){
-			Intent intent = new Intent(Register.this, PatientActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			intent.putExtra(USER_NAME,userName);
-			intent.putExtra(PASSWORD, password);
-			startActivity(intent);
+			result+="";
+			
+			if(!result.equalsIgnoreCase("Error")){
+				System.out.println("patientidis "+ result);
+				
+				patientId = Long.valueOf(result);
+				 //store the patient info in sqlite database
+				 PatientDataSource rds = new PatientDataSource(
+						getApplicationContext());
+
+				 rds.open();
+				 Patient patient = rds.createPatient(userName, patientId, title, 
+						 firstName, lastName);
+				 rds.close();
+				 
+				 System.out.println("Patient Info:"+ patient.getReturnedID() + " "+patient.getFirstName()+" "+patient.getUserName());
+				
+				 //redirect to the login page
+				 Intent intent = new Intent(Register.this, AuthUserActivity.class);
+				 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				 startActivity(intent);
+			}	
 		}
+		
+		
 	}
 
 	@Override
