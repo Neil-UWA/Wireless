@@ -2,14 +2,17 @@ package au.edu.uwa.csp.respreport;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.os.Vibrator;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +28,8 @@ public class BreathingActivity extends Activity {
 	private String userName;
 	private String password;
 	private long 	patientID;
+	private final String ERROR = "Error Uploading Respiratory Rate ";
+
 	
 	Chronometer mChronometer;
 	LinearLayout layout;
@@ -175,10 +180,37 @@ public class BreathingActivity extends Activity {
 				task.addParam("dateRRMeasured", dateMeasured);
 				task.parentActivity = BreathingActivity.this;
 				task.execute();
+				String result = "";
+				try {
+					result = task.get(5, TimeUnit.SECONDS);
+				} catch (Exception e) {
+					result = ERROR;
+					e.printStackTrace();
+				}
+
+				result+="";
+				if(result.equalsIgnoreCase("ok"))
+					alertDialog(result);
+				else alertDialog(ERROR + result);
+
+			
 			}
 		});
 		respBox.setEnabled(true);
 		sendResp.setEnabled(true);
+
+	}
+	public void alertDialog(String msg) {
+		AlertDialog.Builder altDialog = new AlertDialog.Builder(this);
+		altDialog.setMessage(msg); // here add your message
+		altDialog.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		altDialog.show();
 
 	}
 }
