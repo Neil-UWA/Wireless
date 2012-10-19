@@ -30,14 +30,15 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(this, AuthUserActivity.class);
 		startActivity(intent);
 	}
+
 	
 	public void goToRegister(View view) {
 		Intent intent = new Intent(this, Register.class);
 		startActivity(intent);
+
 	}
 	
 
-	
 	 public void patientGraph(View view) {
 	    	Intent intent = new Intent(this, PatientsListGraphActivity.class);
 	    	startActivity(intent);
