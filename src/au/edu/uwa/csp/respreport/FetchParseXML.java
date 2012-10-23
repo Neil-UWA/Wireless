@@ -17,7 +17,7 @@ import org.xml.sax.InputSource;
 import android.app.Activity;
 import android.util.Log;
 
-public class FetchPatients {
+public class FetchParseXML {
 
 	public static List<Patient> FetchPatientFromWebService(Activity act,
 			String userName, String password) {

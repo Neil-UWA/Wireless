@@ -79,7 +79,7 @@ public class AuthUserActivity extends Activity {
 
 			// System.out.println("GO is +" + patient.getReturnedID());
 			if (patient == null) {
-				List<Patient> patients = FetchPatients
+				List<Patient> patients = FetchParseXML
 						.FetchPatientFromWebService(AuthUserActivity.this,
 								userName, password);
 
