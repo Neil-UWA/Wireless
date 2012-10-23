@@ -1,0 +1,25 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <Button
+        android:id="@+id/buttonViewData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="81dp"
+        android:text="View Data" />
+
+    <Button
+        android:id="@+id/buttonRecBreathing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonViewData"
+        android:layout_alignBottom="@+id/buttonViewData"
+        android:layout_toLeftOf="@+id/buttonViewData"
+        android:text="Record Breathing" />
+
+</RelativeLayout>

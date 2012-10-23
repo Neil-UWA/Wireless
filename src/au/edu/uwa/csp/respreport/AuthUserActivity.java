@@ -97,7 +97,7 @@ public class AuthUserActivity extends Activity {
 							PatientsListGraphActivity.class);
 				} else {
 					intent = new Intent(AuthUserActivity.this,
-							BreathingActivity.class);
+							PostLoginActivity.class);
 				}
 				
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
