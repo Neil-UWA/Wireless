@@ -65,10 +65,15 @@ public class BreathingActivity extends Activity {
 		sendResp.setEnabled(false);
 		respBox.setEnabled(false);
 		
+		/*
 		Intent intent =  getIntent();
 		userName = intent.getStringExtra(AuthUserActivity.USER_NAME);
 		password = intent.getStringExtra(AuthUserActivity.PASSWORD);
 		patientID = intent.getLongExtra(AuthUserActivity.PATIENT_ID, 1);
+		*/
+		userName = AppFunctions.getUsername();
+		password = AppFunctions.getPassword();
+		patientID = AppFunctions.getPatientID();
 
 		System.out.println("GO is +" + patientID);
 	}

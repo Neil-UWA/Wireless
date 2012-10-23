@@ -99,10 +99,16 @@ public class AuthUserActivity extends Activity {
 					intent = new Intent(AuthUserActivity.this,
 							BreathingActivity.class);
 				}
+				
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				intent.putExtra(USER_NAME, userName);
+				/*intent.putExtra(USER_NAME, userName);
 				intent.putExtra(PASSWORD, password);
 				intent.putExtra(PATIENT_ID, patient.getReturnedID());
+				*/
+				AppFunctions.setUsername(userName);
+				AppFunctions.setPassword(password);
+				AppFunctions.setPatientID(patient.getReturnedID());
+				
 
 				startActivity(intent);
 			} else

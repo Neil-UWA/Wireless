@@ -22,8 +22,8 @@ public class GraphingActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_graphing);
 		
-		int intentInt;
-		
+		int intentInt = (int) AppFunctions.getPatientID();
+		/*
 		if(savedInstanceState != null){
 			intentInt = savedInstanceState.getInt("PatientId");
 		}else intentInt = -1;
@@ -34,7 +34,7 @@ public class GraphingActivity extends Activity {
 				intentInt = extras.getInt("PatientId");
 			}
 			else intentInt = -1;
-		}
+		}*/
 		
 	
 		getPatientGraphView(intentInt);
