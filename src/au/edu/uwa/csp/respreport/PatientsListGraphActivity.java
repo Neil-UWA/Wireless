@@ -18,66 +18,74 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class PatientsListGraphActivity extends Activity{
-	
+public class PatientsListGraphActivity extends Activity {
+
 	private ListView patientListView;
 	private ArrayAdapter<String> listAdapter;
 	private ArrayList<Integer> patientsId = new ArrayList<Integer>();
 	private static final String TAG = "PatientsList";
-	
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_patients_list);
-		
-		//Find the list View
+
+		// Find the list View
 		patientListView = (ListView) findViewById(R.id.patientsListView);
-		ArrayList<String>patientsList = getPatientsFromDatabase();
-		
-		//Create Array Adapter using the array list and bind the array with the adapter.
-		listAdapter = new ArrayAdapter<String>(this, R.layout.patient_row, patientsList);
+		ArrayList<String> patientsList = getPatientsFromDatabase();
+
+		// Create Array Adapter using the array list and bind the array with the
+		// adapter.
+		listAdapter = new ArrayAdapter<String>(this, R.layout.patient_row,
+				patientsList);
 		patientListView.setAdapter(listAdapter);
 		patientListView.setOnItemClickListener(listViewClickHandler);
-		
+
 	}
-	
-	
+
 	public ArrayList<String> getPatientsFromDatabase() {
-		//String patient;
+		// String patient;
 		ArrayList<String> patientsList = new ArrayList<String>();
-		
-		PatientDataSource pds = new PatientDataSource(getApplicationContext());
-		List<Patient> pList = new ArrayList<Patient>();
-		
-		pds.open();
-		pList = pds.getAllPatients();
-		pds.close();
-	
-		for(Patient p : pList) {
-			String patient = p.getTitle() + ". " + p.toString();
-			patientsId.add((int)p.getId());
-			patientsList.add(patient);
+
+		//PatientDataSource pds = new PatientDataSource(getApplicationContext());
+		// List<Patient> pList = new ArrayList<Patient>();
+		List<Patient> pList = FetchParseXML.FetchPatientFromWebService(
+				PatientsListGraphActivity.this, AppFunctions.getUsername(),
+				AppFunctions.getPassword());
+
+		for (Patient p : pList) {
+			if (!p.getTitle().equalsIgnoreCase("doctor")) {
+
+			/*	int nResp = FetchParseXML.FetchRespiratoryFromWebService(
+						PatientsListGraphActivity.this,
+						AppFunctions.getUsername(), AppFunctions.getPassword(),
+						p.getReturnedID()).size();
+			*/
+				//if (p.getUserName().equalsIgnoreCase("debugger")) {
+					String patient = p.getTitle() + ". " + p.toString();
+					patientsId.add((int) p.getReturnedID());
+					patientsList.add(patient);
+				//}
+			}
 		}
-		
-		
+
 		return patientsList;
 	}
-	
+
 	private OnItemClickListener listViewClickHandler = new OnItemClickListener() {
-		public void onItemClick(AdapterView parent, View v, int position, long id) {
-			Log.d(TAG, "pos: " + position + " id: "+ id);
-			int patientId = patientsId.get((int) patientListView.getItemIdAtPosition(position));
-			
-			//Create new intent to call Graphing Activity class
-			Intent intent = new Intent(getApplicationContext(),GraphingActivity.class);
-			//Put patientId information in the intent to be passed over
+		public void onItemClick(AdapterView parent, View v, int position,
+				long id) {
+			Log.d(TAG, "pos: " + position + " id: " + id);
+			int patientId = patientsId.get((int) patientListView
+					.getItemIdAtPosition(position));
+
+			// Create new intent to call Graphing Activity class
+			Intent intent = new Intent(getApplicationContext(),
+					GraphingActivity.class);
+			// Put patientId information in the intent to be passed over
 			intent.putExtra("PatientId", patientId);
 			startActivity(intent);
-			
+
 		}
 	};
 
-	
-	
-	
-		
 }

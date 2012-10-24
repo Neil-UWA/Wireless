@@ -44,15 +44,14 @@ public class FetchParseXML {
 		DocumentBuilderFactory factory;
 		DocumentBuilder builder;
 		InputSource is;
+		StringReader sr = null;
 		Document dom = null;
 		try {
 			factory = DocumentBuilderFactory.newInstance();
 			builder = factory.newDocumentBuilder();
-
-			StringReader sr = new StringReader(xml);
+			sr = new StringReader(xml);
 			is = new InputSource(sr);
-			dom = builder.parse(is);
-
+			
 			dom = builder.parse(is);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -68,22 +67,22 @@ public class FetchParseXML {
 				Node pchild = patient_children.item(j);
 				String name = pchild.getNodeName();
 				if (name.equalsIgnoreCase("firstname")) {
-					Log.d("FirstName", getElementValue(pchild));
+					//Log.d("FirstName", getElementValue(pchild));
 					patient.setFirstName(getElementValue(pchild));
 				} else if (name.equalsIgnoreCase("lastname")) {
-					Log.d("LastName", getElementValue(pchild));
+					//Log.d("LastName", getElementValue(pchild));
 					patient.setLastName(getElementValue(pchild));
 
 				} else if (name.equalsIgnoreCase("username")) {
-					Log.d("Username", getElementValue(pchild));
+					//Log.d("Username", getElementValue(pchild));
 					patient.setUserName(getElementValue(pchild));
 
 				} else if (name.equalsIgnoreCase("title")) {
-					Log.d("Title", getElementValue(pchild));
+					//Log.d("Title", getElementValue(pchild));
 					patient.setTitle(getElementValue(pchild));
 
 				} else if (name.equalsIgnoreCase("patientid")) {
-					Log.d("PID", getElementValue(pchild));
+					//Log.d("PID", getElementValue(pchild));
 					patient.setReturnedID(Long
 							.parseLong(getElementValue(pchild)));
 
@@ -94,6 +93,7 @@ public class FetchParseXML {
 			plist.add(patient);
 		}
 		Log.d("Finished parsing", "Patients");
+		sr.close();
 		return plist;
 	}
 
@@ -126,14 +126,13 @@ public class FetchParseXML {
 		DocumentBuilder builder;
 		InputSource is;
 		Document dom = null;
+		StringReader sr = null;
 		try {
 			factory = DocumentBuilderFactory.newInstance();
 			builder = factory.newDocumentBuilder();
 
-			StringReader sr = new StringReader(xml);
+			sr = new StringReader(xml);
 			is = new InputSource(sr);
-			dom = builder.parse(is);
-
 			dom = builder.parse(is);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -149,18 +148,18 @@ public class FetchParseXML {
 				Node pchild = resp_child.item(j);
 				String name = pchild.getNodeName();
 				if (name.equalsIgnoreCase("PatientRRID")) {
-					Log.d("PatientRRID", getElementValue(pchild));
+					//Log.d("PatientRRID", getElementValue(pchild));
 					respiratory.setId(Long.parseLong(getElementValue(pchild)));
 				} else if (name.equalsIgnoreCase("PatientID")) {
-					Log.d("PatientID", getElementValue(pchild));
+					//Log.d("PatientID", getElementValue(pchild));
 					respiratory.setPatientID(Long.parseLong(getElementValue(pchild)));
 
 				} else if (name.equalsIgnoreCase("RespiratoryRate")) {
-					Log.d("RespiratoryRate", getElementValue(pchild));
+					//Log.d("RespiratoryRate", getElementValue(pchild));
 					respiratory.setRespiratoryRate(Integer.parseInt(getElementValue(pchild)));
 
 				} else if (name.equalsIgnoreCase("DateRRMeasured")) {
-					Log.d("DateRRMeasured", getElementValue(pchild));
+					//Log.d("DateRRMeasured", getElementValue(pchild));
 					respiratory.setDateMeasured(getElementValue(pchild));
 
 				} 
@@ -170,7 +169,8 @@ public class FetchParseXML {
 			rlist.add(respiratory);
 		}
 		Log.d("Finished parsing", "Respiratory");
-	
+		
+		sr.close();	
 		
 		return rlist;
 	}

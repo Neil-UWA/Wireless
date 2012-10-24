@@ -51,8 +51,7 @@ class SOAPTask extends AsyncTask<String, Void, String> {
 
 		parentActivity.runOnUiThread(new Runnable() {
 			public void run() {
-				response = result;
-				System.out.println("good "+response);
+				
 			}
 		});
 
