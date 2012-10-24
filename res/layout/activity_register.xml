@@ -4,14 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-     <EditText
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/title"
-        android:ems="10">
-        <requestFocus />
-    </EditText>
+     
+     <Spinner
+         android:id="@+id/title"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:hint="@string/title"
+         android:ems="10">   
+         <requestFocus />
+     </Spinner>
     
     <EditText 
         android:id="@+id/reg_user_name"

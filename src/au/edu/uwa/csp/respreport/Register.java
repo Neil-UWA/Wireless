@@ -1,12 +1,19 @@
 package au.edu.uwa.csp.respreport;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import au.edu.uwa.csp.respreport.R;
 
@@ -17,6 +24,7 @@ public class Register extends Activity {
 	private final String ERROR = "Error Registration failed ";
 
 	private String title;
+	private Spinner titleSp;
 	private String userName;
 	private long patientId;
 	private String password;
@@ -27,8 +35,40 @@ public class Register extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
+		
+		addItemsOnSpinner();
+		addListenerOnButton();
 	}
 
+	public void addItemsOnSpinner() {
+		titleSp = (Spinner) findViewById(R.id.title);
+		List<String> list = new ArrayList<String>();
+		
+		list.add("Dr.");
+		list.add("Mr.");
+		list.add("Miss.");
+		list.add("Mrs.");
+		
+		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,list);
+		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		titleSp.setAdapter(dataAdapter);
+	}
+	
+	public void addListenerOnButton() {
+		titleSp = (Spinner) findViewById(R.id.title);
+		Button btnReg = (Button) findViewById(R.id.btnRegister);
+		
+		btnReg.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				title = String.valueOf(titleSp.getSelectedItem());
+				Toast.makeText(Register.this, String.valueOf(titleSp.getSelectedItem()), Toast.LENGTH_LONG).show();
+			}
+			
+		});
+		
+	}
+	
 	public void doRegister(View view) {
 		// setContentView(textView);
 		//get user name from input
@@ -40,8 +80,8 @@ public class Register extends Activity {
 		password = edt_password.getText().toString();
 		
 		// setContentView(textView);
-    	EditText edt_title = (EditText) findViewById(R.id.title);
-    	title = edt_title.getText().toString();
+    	//EditText edt_title = (EditText) findViewById(R.id.title);
+    	//title = edt_title.getText().toString();
     	
     	//get user name from input
     	EditText edt_firstName = (EditText) findViewById(R.id.firstName);
