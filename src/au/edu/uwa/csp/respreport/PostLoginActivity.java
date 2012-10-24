@@ -15,7 +15,8 @@ public class PostLoginActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_post_login);
 
-		// savedInstanceState.
+		// allow user to choose between recording breathing rate or viewing data
+		// already recorded
 		Button bResp = (Button) findViewById(R.id.buttonRecBreathing);
 		bResp.setOnClickListener(this);
 		Button bGraph = (Button) findViewById(R.id.buttonViewData);
@@ -34,12 +35,12 @@ public class PostLoginActivity extends Activity implements OnClickListener {
 
 		if (v.getId() == R.id.buttonRecBreathing) {
 			intent = new Intent(PostLoginActivity.this, BreathingActivity.class);
-		}
-		else if (v.getId() == R.id.buttonViewData){
+		} else if (v.getId() == R.id.buttonViewData) {
 			intent = new Intent(PostLoginActivity.this, GraphingActivity.class);
 		}
 
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		//starts the chosen activity
 		startActivity(intent);
 	}
 }

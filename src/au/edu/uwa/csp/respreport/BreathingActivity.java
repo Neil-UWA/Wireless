@@ -27,10 +27,9 @@ import android.widget.Toast;
 public class BreathingActivity extends Activity {
 	private String userName;
 	private String password;
-	private long 	patientID;
+	private long patientID;
 	private final String ERROR = "Error Uploading Respiratory Rate ";
 
-	
 	Chronometer mChronometer;
 	LinearLayout layout;
 	EditText respBox;
@@ -42,10 +41,11 @@ public class BreathingActivity extends Activity {
 		setContentView(R.layout.activity_breathing);
 
 		mChronometer = (Chronometer) findViewById(R.id.chronometer1);
-		// Set the initial value
+		// Set the initial value for chronometer
 		mChronometer.setText("00:00");
 		mChronometer.setOnChronometerTickListener(mTickListener);
 
+		// add listeners for start,stop, reset
 		Button startButton = (Button) findViewById(R.id.buttonStartResp);
 		startButton.setText("Start");
 		startButton.setOnClickListener(mStartListener);
@@ -58,24 +58,18 @@ public class BreathingActivity extends Activity {
 		resetButton.setText("Reset");
 		resetButton.setOnClickListener(mResetListener);
 
+		// disable resp rate. input until countdown is over
 		respBox = (EditText) findViewById(R.id.editTextResp);
 		sendResp = (Button) findViewById(R.id.buttonSendResp);
 		respBox.setHint("Waiting for timer..");
 
 		sendResp.setEnabled(false);
 		respBox.setEnabled(false);
-		
-		/*
-		Intent intent =  getIntent();
-		userName = intent.getStringExtra(AuthUserActivity.USER_NAME);
-		password = intent.getStringExtra(AuthUserActivity.PASSWORD);
-		patientID = intent.getLongExtra(AuthUserActivity.PATIENT_ID, 1);
-		*/
+
 		userName = AppFunctions.getUsername();
 		password = AppFunctions.getPassword();
 		patientID = AppFunctions.getPatientID();
 
-		System.out.println("GO is +" + patientID);
 	}
 
 	private void showElapsedTime() {
@@ -92,7 +86,8 @@ public class BreathingActivity extends Activity {
 	View.OnClickListener mStartListener = new OnClickListener() {
 		public void onClick(View v) {
 			int stoppedMilliseconds = 0;
-
+			
+			//start counting time
 			String chronoText = mChronometer.getText().toString();
 			String array[] = chronoText.split(":");
 			if (array.length == 2) {
@@ -112,6 +107,7 @@ public class BreathingActivity extends Activity {
 
 	View.OnClickListener mStopListener = new OnClickListener() {
 		public void onClick(View v) {
+			//stop chronometer
 			mChronometer.stop();
 			showElapsedTime();
 		}
@@ -119,12 +115,14 @@ public class BreathingActivity extends Activity {
 
 	View.OnClickListener mResetListener = new OnClickListener() {
 		public void onClick(View v) {
-			respBox.setHint("Waiting for timer..");
-			respBox.setText("");
-
+			
+			// reset chronometer and disable input
 			sendResp.setEnabled(false);
 			respBox.setEnabled(false);
 			
+			respBox.setHint("Waiting for timer..");
+			respBox.setText("");
+
 			mChronometer.setBase(SystemClock.elapsedRealtime());
 			showElapsedTime();
 
@@ -133,13 +131,14 @@ public class BreathingActivity extends Activity {
 	OnChronometerTickListener mTickListener = new OnChronometerTickListener() {
 
 		public void onChronometerTick(Chronometer chronometer) {
-			if ("00:05".equals(chronometer.getText())) {
+			//if 1 minute is reached allow user to enter respiration rate
+			if ("01:00".equals(chronometer.getText())) {
 				Toast.makeText(getApplicationContext(), "Time's up",
 						Toast.LENGTH_LONG).show();
+				((Vibrator) getSystemService(Context.VIBRATOR_SERVICE))
+						.vibrate(500);
 
-				((Vibrator) getSystemService(Context.VIBRATOR_SERVICE)).vibrate(500);
-
-				// create resp rate box
+				// create resp rate box for user input
 				createRespBox();
 				chronometer.stop();
 
@@ -157,25 +156,23 @@ public class BreathingActivity extends Activity {
 		sendResp.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
-				
-				//TODO when a new patient is created, store its patient id for use below
-				//patientID = patient.getId();
+
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 				String dateMeasured = sdf.format(new Date());
 				int respRate = 0 + Integer.parseInt(respBox.getText()
 						.toString());
-				// store in database
+				
+				// store RR in database
 				RespiratoryDataSource rds = new RespiratoryDataSource(
 						getApplicationContext());
 
 				rds.open();
 				rds.createRespiratory(patientID, respRate, dateMeasured);
-				rds.close();
-				System.out.println("Id is = "+ patientID);
+				rds.close();				
 				Log.d("Resp rate:", respBox.getText().toString() + " at "
 						+ dateMeasured);
 
-				// upload to web
+				// upload to webservice
 				SOAPTask task = new SOAPTask(BreathingActivity.this,
 						"AddPatientRR");
 				task.addParam("userName", userName);
@@ -193,17 +190,18 @@ public class BreathingActivity extends Activity {
 					e.printStackTrace();
 				}
 
-				result+="";
-				if(result.equalsIgnoreCase("ok"))
-					AppFunctions.alertDialog(result,BreathingActivity.this);
-				else AppFunctions.alertDialog(ERROR + result, BreathingActivity.this);
+				result += "";
+				if (result.equalsIgnoreCase("ok"))
+					AppFunctions.alertDialog(result, BreathingActivity.this);
+				else
+					AppFunctions.alertDialog(ERROR + result,
+							BreathingActivity.this);
 
-			
 			}
 		});
 		respBox.setEnabled(true);
 		sendResp.setEnabled(true);
 
 	}
-	
+
 }
