@@ -4,8 +4,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
+//Class with values and functions acessible to all activities
 public class AppFunctions {
 	
+	//user data to be able to keep calling webservice
 	private static String username;
 	private static String password;
 	private static long patientID;
@@ -34,13 +36,12 @@ public class AppFunctions {
 		AppFunctions.patientID = patientID;
 	}
 
+	//creates dialog message with desired input
 	public static void alertDialog(String msg, Context c) {
 		AlertDialog.Builder altDialog = new AlertDialog.Builder(c);
 		altDialog.setMessage(msg); // here add your message
 		altDialog.setNeutralButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 

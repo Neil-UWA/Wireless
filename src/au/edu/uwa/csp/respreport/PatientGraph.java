@@ -33,62 +33,26 @@ public class PatientGraph {
 		this.parentActivity = act;
 	}
 
-	public Intent getIntent(Context context) {
-
-		int patientId = 5;
-		String dateFormat = "dd/MM/yy hh:mm";
-
-		XYMultipleSeriesDataset dataset = getDataset(context, patientId,
-				dateFormat);
-		XYMultipleSeriesRenderer mRenderer = getRenderer();
-
-		Intent intent = ChartFactory.getTimeChartIntent(context, dataset,
-				mRenderer, "dd/MM/yy hh:mm");
-		return intent;
-	}
-
+	/*
+	 * Get the view for patient = patientId
+	 * Return GraphicalView containing the view of the graph.
+	 */
 	public GraphicalView getView(Context context, int patientId) {
 
-		// int patientId = 5;
 		String dateFormat = "dd/MM/yy hh:mm";
 
+		//Getting the respiratory data
 		XYMultipleSeriesDataset dataset = getDataset(context, patientId,
 				dateFormat);
+		//Getting the customization setting of the graph.
 		XYMultipleSeriesRenderer mRenderer = getRenderer();
 
-		/*
-		 * String currDir = System.getProperty("user.dir");
-		 * System.out.println(currDir);
-		 * 
-		 * File dir = new File("."); try { System.out.println("Curr Dir " +
-		 * dir.getAbsolutePath() ); System.out.println("Curr Dir " +
-		 * dir.getPath() ); System.out.println("Curr Dir " + dir.getName() ); }
-		 * catch (Exception e) { System.out.println("Exception"); }
-		 */
 
 		return ChartFactory.getTimeChartView(context, dataset, mRenderer,
 				"dd/MM/yy hh:mm");
 
 	}
 
-	private void writeToFile(String content, String filename) {
-		FileWriter out = null;
-		try {
-			out = new FileWriter(filename);
-			BufferedWriter writer = new BufferedWriter(out);
-			writer.write(content);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (out != null) {
-				try {
-					out.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
 
 	private void checkParameter(XYMultipleSeriesDataset dataset,
 			XYMultipleSeriesRenderer renderer) {
@@ -101,11 +65,16 @@ public class PatientGraph {
 		}
 	}
 
+	/*
+	 * Get the dataset that is empty. Set the default value to 0
+	 * Return the set of data.
+	 */
 	private XYMultipleSeriesDataset getDatasetEmpty(Context context,
 			int patientId, String dateFormat) {
 		TimeSeries series = new TimeSeries("Rate Graph");
 
 		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+		//set the default value to 0
 		series.add(new Date(), 0);
 
 		dataset.addSeries(series);
@@ -114,17 +83,17 @@ public class PatientGraph {
 
 	}
 
+	/*
+	 * Get the dataset with the specified patientId.
+	 */
 	private XYMultipleSeriesDataset getDataset(Context context, int patientId,
 			String dateFormat) {
-		RespiratoryDataSource rds = new RespiratoryDataSource(context);
-
+		
 		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 		TimeSeries series = new TimeSeries("Rate Graph");
 		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
-		/*
-		 * rds.open(); resList =
-		 * rds.getRespiratoryByPatientIdSortByTime(patientId); rds.close();
-		 */
+		
+		//Get data from web services
 		List<Patient> lPatient = FetchParseXML.FetchPatientFromWebService(
 				parentActivity, AppFunctions.getUsername(),
 				AppFunctions.getPassword());
@@ -140,12 +109,14 @@ public class PatientGraph {
 		}
 
 		Log.d("Pgraph","found patient "+ patient.getUserName());
+		//Get respiratory data from web services
 		List<Respiratory> resList = FetchParseXML.FetchRespiratoryFromWebService(
 				parentActivity, AppFunctions.getUsername(),
 				AppFunctions.getPassword(), patient.getReturnedID());
 		
 		Log.d("fetchResp", "Pgraph");
-
+		
+		//if there is no dataset, call default empty dataset.
 		if (resList.size() == 0) {
 			Log.d("No dataset", "No Rate recorded before");
 			dataset = getDatasetEmpty(context, patientId, dateFormat);
@@ -163,7 +134,7 @@ public class PatientGraph {
 					System.out.println("Parsing Date Error!");
 					e.printStackTrace();
 				}
-
+				//add date and value to the series
 				series.add(newDate, iRate);
 			}
 
@@ -173,15 +144,16 @@ public class PatientGraph {
 		return dataset;
 	}
 
+	/*
+	 * Line customization function
+	 */
 	private XYMultipleSeriesRenderer getRenderer() {
 		XYSeriesRenderer renderer = new XYSeriesRenderer();
-		// renderer.setColor(Color.rgb(135,206,250));
+
 		renderer.setColor(Color.rgb(30, 144, 255));
 		renderer.setPointStyle(PointStyle.SQUARE);
 		renderer.setFillPoints(true);
 		renderer.setLineWidth((float) 1.5);
-		// renderer.setFillBelowLine(true);
-		// renderer.setFillBelowLineColor(Color.rgb(30,144,255));
 
 		XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
 		mRenderer.addSeriesRenderer(renderer);
@@ -192,6 +164,9 @@ public class PatientGraph {
 		return mRenderer;
 	}
 
+	/*
+	 * Graph customization function
+	 */
 	private void setChartSettings(XYMultipleSeriesRenderer mRenderer) {
 		mRenderer.setBackgroundColor(Color.BLACK);
 		mRenderer.setApplyBackgroundColor(true);

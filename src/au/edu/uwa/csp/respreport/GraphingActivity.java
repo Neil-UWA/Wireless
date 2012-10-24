@@ -13,8 +13,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
-
-
+/*
+ * Activity to display the graph for each patient.
+ * Call getPatientGraphView() function to display the graph.
+ */
 public class GraphingActivity extends Activity {
 	
 	
@@ -24,7 +26,7 @@ public class GraphingActivity extends Activity {
 		
 		int intentInt;
 		
-		
+		//Get the saved information about patientId
 		if(savedInstanceState != null){
 			intentInt = savedInstanceState.getInt("PatientId");
 		}else intentInt = -1;
@@ -39,19 +41,17 @@ public class GraphingActivity extends Activity {
 		
 	
 		getPatientGraphView(intentInt);
-		//}
-		//else{
-		//	Intent intent = new Intent(getApplicationContext(),PatientsListGraphActivity.class);
-		//	startActivity(intent);
-		//}
 	}
 	
+	/*
+	 * Display the graph for each patient.
+	 */
 	public void getPatientGraphView(int patientId) {
 		PatientGraph gp = new PatientGraph(GraphingActivity.this);
-		
-		GraphicalView gpView = gp.getView(this,patientId);
-		
+
+		GraphicalView gpView = gp.getView(this,patientId);		
 		LinearLayout gpLayout = (LinearLayout) findViewById(R.id.graphLayout);
+		//adding the view to the layout.
 		gpLayout.addView(gpView);
 	}
 	
