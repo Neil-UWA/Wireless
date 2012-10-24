@@ -2,8 +2,8 @@
 
     <string name="app_name">Breathing System</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">Test Methods</string>
-    <string name="title_activity_display_message">Auth User</string>
+    <string name="title_activity_main">Breathing Rate System</string>
+    <string name="title_activity_display_message">Authenticate User</string>
     <string name="number_respiratory">Number of respiratory</string>
     <string name="button_add">Add</string>
 
@@ -25,6 +25,6 @@
     <string name="title_activity_patients_list_graph">Patients List Graph</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
-    <string name="title_activity_post_login">PostLoginActivity</string>
+    <string name="title_activity_post_login">Choose Activity</string>
 
 </resources>
