@@ -28,7 +28,7 @@ public class GraphingActivity extends Activity {
 			if(extras != null){
 				intentInt = extras.getInt("PatientId");
 			}
-			else intentInt = -1;
+			else intentInt = (int) AppFunctions.getPatientID();
 		}
 		
 	

@@ -103,6 +103,7 @@ public class PatientGraph {
 			}
 		}
 
+		if (patient != null){
 		Log.d("Pgraph","found patient "+ patient.getUserName());
 		//Get respiratory data from web services
 		List<Respiratory> resList = FetchParseXML.FetchRespiratoryFromWebService(
@@ -135,6 +136,7 @@ public class PatientGraph {
 
 			dataset.addSeries(series);
 
+		}
 		}
 		return dataset;
 	}
