@@ -8,12 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import au.edu.uwa.csp.respreport.R;
 
@@ -35,56 +32,58 @@ public class Register extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
-		
+
 		addItemsOnSpinner();
 	}
 
+	// the dropdown list for title.
 	public void addItemsOnSpinner() {
 		titleSp = (Spinner) findViewById(R.id.title);
 		List<String> list = new ArrayList<String>();
-		
+
 		list.add("Dr.");
 		list.add("Mr.");
 		list.add("Miss.");
 		list.add("Mrs.");
-		
-		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,list);
-		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, list);
+		dataAdapter
+				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		titleSp.setAdapter(dataAdapter);
 	}
-	
-		
+
 	public void doRegister(View view) {
 		// setContentView(textView);
-		//get user name from input
+		// get user name from input
 		EditText edt_userName = (EditText) findViewById(R.id.reg_user_name);
 		userName = edt_userName.getText().toString();
 
-		//get password from input
+		// get password from input
 		EditText edt_password = (EditText) findViewById(R.id.reg_password);
 		password = edt_password.getText().toString();
-		
-		// setContentView(textView);
-    	//EditText edt_title = (EditText) findViewById(R.id.title);
-    	//title = edt_title.getText().toString();
+
+		// get the title of the user
 		title = String.valueOf(titleSp.getSelectedItem());
 
-    	
-    	//get user name from input
-    	EditText edt_firstName = (EditText) findViewById(R.id.firstName);
-    	firstName = edt_firstName.getText().toString();
-    	
-    	//get password from input
-    	EditText edt_lastName = (EditText) findViewById(R.id.lastName);
-    	lastName = edt_lastName.getText().toString();
-    	  	
+		// get user name from input
+		EditText edt_firstName = (EditText) findViewById(R.id.firstName);
+		firstName = edt_firstName.getText().toString();
 
+		// get password from input
+		EditText edt_lastName = (EditText) findViewById(R.id.lastName);
+		lastName = edt_lastName.getText().toString();
+
+		// Register a new user by starting a SOAP task to call the RegisterUser
+		// web service
 		SOAPTask task = new SOAPTask(Register.this, "RegisterUser");
+		// add the required parameters for the RegisterUser web service
 		task.addParam("userName", userName);
 		task.addParam("password", password);
 		task.parentActivity = Register.this;
 		task.execute();
-		
+
+		// wait for 5 sec and get the response of the web service
 		String result = "";
 		try {
 			result = task.get(5, TimeUnit.SECONDS);
@@ -93,10 +92,13 @@ public class Register extends Activity {
 			e.printStackTrace();
 		}
 
-		if(result.equalsIgnoreCase("ok")){
-			SOAPTask newTask = new SOAPTask(Register.this,
-					"AddPatient");
-	    	
+		// if registration is successful
+		if (result.equalsIgnoreCase("ok")) {
+			// Add a new patient by creating a SOAP task to call the AddPatient
+			// web service
+			SOAPTask newTask = new SOAPTask(Register.this, "AddPatient");
+
+			// add the required parameters for the AddPatient web service
 			newTask.addParam("userName", userName);
 			newTask.addParam("password", password);
 			newTask.addParam("title", title);
@@ -104,7 +106,8 @@ public class Register extends Activity {
 			newTask.addParam("lastName", lastName);
 			newTask.parentActivity = Register.this;
 			newTask.execute();
-			
+
+			// wait for 5 sec and get the response from the web service
 			try {
 				result = newTask.get(5, TimeUnit.SECONDS);
 			} catch (Exception e) {
@@ -112,31 +115,31 @@ public class Register extends Activity {
 				e.printStackTrace();
 			}
 
-			result+="";
-			
-			if(!result.equalsIgnoreCase("Error")){
-				System.out.println("patientidis "+ result);
-				
+			result += "";
+
+			// if add new patient successfully
+			if (!result.equalsIgnoreCase("Error")) {
+
 				patientId = Long.valueOf(result);
-				 //store the patient info in sqlite database
-				 PatientDataSource rds = new PatientDataSource(
+				// store the patient info in sqlite database
+				PatientDataSource rds = new PatientDataSource(
 						getApplicationContext());
 
-				 rds.open();
-				 Patient patient = rds.createPatient(userName, patientId, title, 
-						 firstName, lastName);
-				 rds.close();
-				 
-				 System.out.println("Patient Info:"+ patient.getReturnedID() + " "+patient.getFirstName()+" "+patient.getUserName());
-				
-				 //redirect to the login page
-				 Intent intent = new Intent(Register.this, AuthUserActivity.class);
-				 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				 startActivity(intent);
-			}	
-		}else AppFunctions.alertDialog(result, Register.this);
-		
-		
+				rds.open();
+				// create a new patient in the database
+				rds.createPatient(userName, patientId, title, firstName,
+						lastName);
+				rds.close();
+
+				// redirect to the login page
+				Intent intent = new Intent(Register.this,
+						AuthUserActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(intent);
+			}
+		} else
+			AppFunctions.alertDialog(result, Register.this);
+
 	}
 
 	@Override

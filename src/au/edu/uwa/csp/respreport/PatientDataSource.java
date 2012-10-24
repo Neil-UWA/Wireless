@@ -50,6 +50,7 @@ public class PatientDataSource {
     return newPatient;
   }
 
+  // get the patient by using userName
   public Patient getPatient(String userName){
 	  Cursor cursor = database.rawQuery("select * from "+ MySQLiteHelper.TABLE_PATIENT + " where " + 
 			  MySQLiteHelper.COLUMN_USERNAME +" = ?" , new String[]{userName});

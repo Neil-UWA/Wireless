@@ -3,7 +3,7 @@ package au.edu.uwa.csp.respreport;
 public class Patient {
 	  private long id;
 	
-	  private long 	 returnedID;
+	  private long 	 returnedID; // the returned patientID from AddPatient web service
 	  private String userName;
 	  private String title;
 	  private String firstName;

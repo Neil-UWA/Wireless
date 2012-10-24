@@ -16,7 +16,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	  public static final String COLUMN_TITLE = "title";
 	  public static final String COLUMN_FIRSTNAME = "firstName";
 	  public static final String COLUMN_PATIENTID = "patientID";
-	  public static final String COLUMN_RETURNEDID = "returnedID";
+	// the returned patientID from the AddPatient webService
+	  public static final String COLUMN_RETURNEDID = "returnedID"; 
 	  public static final String COLUMN_RESPIRATORYRATE = "respiratoryRate";
 	  public static final String COLUMN_DATERRMEASURED = "dateRRMeasured";
  

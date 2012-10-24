@@ -50,11 +50,15 @@ public class AuthUserActivity extends Activity {
 		EditText edt_password = (EditText) findViewById(R.id.password);
 		password = edt_password.getText().toString();
 
+		// create a SOAP task to call the AuthUser web services
 		SOAPTask task = new SOAPTask(AuthUserActivity.this, "AuthUser");
+		// add the required parameters for the call
 		task.addParam("userName", userName);
 		task.addParam("password", password);
 		task.parentActivity = AuthUserActivity.this;
 		task.execute();
+
+		// wait for 5 second and get the response from the web service
 		String result = "";
 		try {
 			result = task.get(5, TimeUnit.SECONDS);
@@ -65,20 +69,28 @@ public class AuthUserActivity extends Activity {
 
 		result += "";
 
-		// if authentication succeeded, redirect to new activity
-		if (result.equalsIgnoreCase("OK")) {
+		if (result.equalsIgnoreCase("OK")) { // if login successfully
+
+			// open the sqlite database and check the current patient data
 			PatientDataSource pds = new PatientDataSource(
 					getApplicationContext());
 			Patient patient = new Patient();
 			pds.open();
 			patient = pds.getPatient(userName);
 
+			/*
+			 * if there is no records for this patient in the database, download
+			 * the patient information and the patient breathing data from the
+			 * web service
+			 */
+
 			if (patient == null) {
 				Log.d("getPatient", "from Webservice");
+				
+				// fetch the patient information from webService
 				List<Patient> patients = FetchParseXML
 						.FetchPatientFromWebService(AuthUserActivity.this,
 								userName, password);
-
 				for (Patient patient1 : patients) {
 					if (patient1.getUserName().equalsIgnoreCase(userName)) {
 						patient = patient1;
@@ -90,8 +102,8 @@ public class AuthUserActivity extends Activity {
 						break;
 					}
 				}
-
 				
+				// fetch the resp data for the user from the web service
 				List<Respiratory> lResp = FetchParseXML
 						.FetchRespiratoryFromWebService(AuthUserActivity.this,
 								userName, password, patient.getReturnedID());
@@ -107,11 +119,19 @@ public class AuthUserActivity extends Activity {
 				rds.close();
 			}
 			pds.close();
-			
-			
-			// If it's a doctor, go to doctor view.
+
+			/*
+			 * If the patient's information and breathing data have been stored
+			 * in sqlite database get the patient information, including
+			 * userName, password and patientID
+			 */
+
 			if (patient != null) {
+				// get the title of the user
 				String pTitle = patient.getTitle();
+
+				// if it's a doctor, redirect to the doctor view,
+				// else go to the patient view
 				if (pTitle.contains("Dr")) {
 					intent = new Intent(AuthUserActivity.this,
 							PatientsListGraphActivity.class);
@@ -121,11 +141,8 @@ public class AuthUserActivity extends Activity {
 				}
 
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				/*
-				 * intent.putExtra(USER_NAME, userName);
-				 * intent.putExtra(PASSWORD, password);
-				 * intent.putExtra(PATIENT_ID, patient.getReturnedID());
-				 */
+				// pass the userName, password and patientID to the next
+				// activity for future use
 				AppFunctions.setUsername(userName);
 				AppFunctions.setPassword(password);
 				AppFunctions.setPatientID(patient.getReturnedID());
@@ -137,12 +154,6 @@ public class AuthUserActivity extends Activity {
 			AppFunctions.alertDialog("User doesn't exist",
 					AuthUserActivity.this);
 
-	}
-
-	// go to the register view
-	public void goToRegister(View view) {
-		Intent intent = new Intent(this, Register.class);
-		startActivity(intent);
 	}
 
 	@Override
