@@ -28,6 +28,7 @@ class SOAPTask extends AsyncTask<String, Void, String> {
 		this.parentActivity = parentActivity;
 		this.METHOD_NAME1 = method;
 		this.SOAP_ACTION2 += method;
+		//create request object here to allow outer method to set params
 		request = new SoapObject(NAMESPACE, METHOD_NAME1);
 		Log.d(SOAP_ACTION2, METHOD_NAME1);
 	}

@@ -19,6 +19,7 @@ import android.util.Log;
 
 public class FetchParseXML {
 
+	//calls webservice and parses patient XML
 	public static List<Patient> FetchPatientFromWebService(Activity act,
 			String userName, String password) {
 		SOAPTask task = new SOAPTask(act, "GetAllPatients");
@@ -33,12 +34,11 @@ public class FetchParseXML {
 			e.printStackTrace();
 		}
 
-		//Log.d("XML", result.toString());
-
 		return ParsePatientXML(result);
 
 	}
 
+	//parses patient XML file into list of patients
 	private static List<Patient> ParsePatientXML(String xml) {
 		List<Patient> plist = new ArrayList<Patient>();
 		DocumentBuilderFactory factory;
@@ -51,7 +51,7 @@ public class FetchParseXML {
 			builder = factory.newDocumentBuilder();
 			sr = new StringReader(xml);
 			is = new InputSource(sr);
-			
+
 			dom = builder.parse(is);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -67,22 +67,17 @@ public class FetchParseXML {
 				Node pchild = patient_children.item(j);
 				String name = pchild.getNodeName();
 				if (name.equalsIgnoreCase("firstname")) {
-					//Log.d("FirstName", getElementValue(pchild));
 					patient.setFirstName(getElementValue(pchild));
 				} else if (name.equalsIgnoreCase("lastname")) {
-					//Log.d("LastName", getElementValue(pchild));
 					patient.setLastName(getElementValue(pchild));
 
 				} else if (name.equalsIgnoreCase("username")) {
-					//Log.d("Username", getElementValue(pchild));
 					patient.setUserName(getElementValue(pchild));
 
 				} else if (name.equalsIgnoreCase("title")) {
-					//Log.d("Title", getElementValue(pchild));
 					patient.setTitle(getElementValue(pchild));
 
 				} else if (name.equalsIgnoreCase("patientid")) {
-					//Log.d("PID", getElementValue(pchild));
 					patient.setReturnedID(Long
 							.parseLong(getElementValue(pchild)));
 
@@ -97,6 +92,7 @@ public class FetchParseXML {
 		return plist;
 	}
 
+	//calls webservice then parses the returned XML
 	public static List<Respiratory> FetchRespiratoryFromWebService(
 			Activity act, String userName, String password, long patientID) {
 		SOAPTask task = new SOAPTask(act, "GetPatientRRByPatient");
@@ -112,16 +108,14 @@ public class FetchParseXML {
 			e.printStackTrace();
 		}
 
-		//Log.d("XML", result.toString());
-
 		return ParseRespiratoryXML(result);
 
 	}
-
+	
+	//parses an XML input into a list of respiratory rates
 	public static List<Respiratory> ParseRespiratoryXML(String xml) {
 		List<Respiratory> rlist = new ArrayList<Respiratory>();
 
-		
 		DocumentBuilderFactory factory;
 		DocumentBuilder builder;
 		InputSource is;
@@ -138,7 +132,8 @@ public class FetchParseXML {
 			e.printStackTrace();
 		}
 
-		NodeList node_respiratory = dom.getElementsByTagName("PatientRespiratoryRate");
+		NodeList node_respiratory = dom
+				.getElementsByTagName("PatientRespiratoryRate");
 
 		for (int i = 0; i < node_respiratory.getLength(); i++) {
 			Node elem = node_respiratory.item(i);
@@ -148,35 +143,34 @@ public class FetchParseXML {
 				Node pchild = resp_child.item(j);
 				String name = pchild.getNodeName();
 				if (name.equalsIgnoreCase("PatientRRID")) {
-					//Log.d("PatientRRID", getElementValue(pchild));
 					respiratory.setId(Long.parseLong(getElementValue(pchild)));
 				} else if (name.equalsIgnoreCase("PatientID")) {
-					//Log.d("PatientID", getElementValue(pchild));
-					respiratory.setPatientID(Long.parseLong(getElementValue(pchild)));
+					respiratory.setPatientID(Long
+							.parseLong(getElementValue(pchild)));
 
 				} else if (name.equalsIgnoreCase("RespiratoryRate")) {
-					//Log.d("RespiratoryRate", getElementValue(pchild));
-					respiratory.setRespiratoryRate(Integer.parseInt(getElementValue(pchild)));
+					respiratory.setRespiratoryRate(Integer
+							.parseInt(getElementValue(pchild)));
 
 				} else if (name.equalsIgnoreCase("DateRRMeasured")) {
-					//Log.d("DateRRMeasured", getElementValue(pchild));
 					respiratory.setDateMeasured(getElementValue(pchild));
 
-				} 
+				}
 
 			}
 
 			rlist.add(respiratory);
 		}
 		Log.d("Finished parsing", "Respiratory");
-		
-		sr.close();	
-		
+
+		sr.close();
+
 		return rlist;
 	}
 
 	public final static String getElementValue(Node elem) {
 		Node child;
+		// gets the string value inside a node element
 		if (elem != null) {
 			if (elem.hasChildNodes()) {
 				for (child = elem.getFirstChild(); child != null; child = child
