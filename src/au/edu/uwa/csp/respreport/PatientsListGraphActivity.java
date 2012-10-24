@@ -18,6 +18,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/*
+ * Activity to display the graph for doctor view.
+ */
 public class PatientsListGraphActivity extends Activity {
 
 	private ListView patientListView;
@@ -31,7 +34,7 @@ public class PatientsListGraphActivity extends Activity {
 
 		// Find the list View
 		patientListView = (ListView) findViewById(R.id.patientsListView);
-		ArrayList<String> patientsList = getPatientsFromDatabase();
+		ArrayList<String> patientsList = getPatients();
 
 		// Create Array Adapter using the array list and bind the array with the
 		// adapter.
@@ -42,16 +45,20 @@ public class PatientsListGraphActivity extends Activity {
 
 	}
 
-	public ArrayList<String> getPatientsFromDatabase() {
+	/*
+	 * Get the list of patients
+	 * Return in a form of ArrayList
+	 */
+	public ArrayList<String> getPatients() {
 		// String patient;
 		ArrayList<String> patientsList = new ArrayList<String>();
 
-		//PatientDataSource pds = new PatientDataSource(getApplicationContext());
-		// List<Patient> pList = new ArrayList<Patient>();
+		//Get patients list from web services
 		List<Patient> pList = FetchParseXML.FetchPatientFromWebService(
 				PatientsListGraphActivity.this, AppFunctions.getUsername(),
 				AppFunctions.getPassword());
 
+		//Make sure that Dr. data will not be displayed.
 		for (Patient p : pList) {
 		String pTitle = p.getTitle();
 			if (!pTitle.contains("Dr")) {
@@ -64,6 +71,9 @@ public class PatientsListGraphActivity extends Activity {
 		return patientsList;
 	}
 
+	/*
+	 * When the item in the list is clicked, link it to the graph for that clicked patient
+	 */
 	private OnItemClickListener listViewClickHandler = new OnItemClickListener() {
 		public void onItemClick(AdapterView parent, View v, int position,
 				long id) {
