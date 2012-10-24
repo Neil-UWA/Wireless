@@ -1,11 +1,7 @@
 package au.edu.uwa.csp.respreport;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +15,6 @@ import org.achartengine.renderer.XYSeriesRenderer;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.util.Log;

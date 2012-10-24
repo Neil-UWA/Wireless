@@ -3,7 +3,6 @@ package au.edu.uwa.csp.respreport;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.xmlpull.v1.XmlPullParser;

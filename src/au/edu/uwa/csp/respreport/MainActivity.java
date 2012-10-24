@@ -2,13 +2,10 @@ package au.edu.uwa.csp.respreport;
 
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import au.edu.uwa.csp.respreport.R;
 
 public class MainActivity extends Activity {
 	public final static String EXTRA_MESSAGE = "au.edu.uwa.csp.respreport.MESSAGE";

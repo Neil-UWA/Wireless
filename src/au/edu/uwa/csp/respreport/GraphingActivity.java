@@ -1,17 +1,9 @@
 package au.edu.uwa.csp.respreport;
 
-import java.text.ParseException;
-import java.util.List;
-
 import org.achartengine.GraphicalView;
-import org.achartengine.model.CategorySeries;
-import org.achartengine.renderer.DefaultRenderer;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.LinearLayout;
 /*
  * Activity to display the graph for each patient.
