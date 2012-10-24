@@ -53,18 +53,11 @@ public class PatientsListGraphActivity extends Activity {
 				AppFunctions.getPassword());
 
 		for (Patient p : pList) {
-			if (!p.getTitle().equalsIgnoreCase("doctor")) {
-
-			/*	int nResp = FetchParseXML.FetchRespiratoryFromWebService(
-						PatientsListGraphActivity.this,
-						AppFunctions.getUsername(), AppFunctions.getPassword(),
-						p.getReturnedID()).size();
-			*/
-				//if (p.getUserName().equalsIgnoreCase("debugger")) {
+		String pTitle = p.getTitle();
+			if (!pTitle.contains("Dr")) {
 					String patient = p.getTitle() + ". " + p.toString();
 					patientsId.add((int) p.getReturnedID());
 					patientsList.add(patient);
-				//}
 			}
 		}
 

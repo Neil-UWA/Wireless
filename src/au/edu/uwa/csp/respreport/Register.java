@@ -37,7 +37,6 @@ public class Register extends Activity {
 		setContentView(R.layout.activity_register);
 		
 		addItemsOnSpinner();
-		addListenerOnButton();
 	}
 
 	public void addItemsOnSpinner() {
@@ -54,21 +53,7 @@ public class Register extends Activity {
 		titleSp.setAdapter(dataAdapter);
 	}
 	
-	public void addListenerOnButton() {
-		titleSp = (Spinner) findViewById(R.id.title);
-		Button btnReg = (Button) findViewById(R.id.btnRegister);
 		
-		btnReg.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
-				title = String.valueOf(titleSp.getSelectedItem());
-				Toast.makeText(Register.this, String.valueOf(titleSp.getSelectedItem()), Toast.LENGTH_LONG).show();
-			}
-			
-		});
-		
-	}
-	
 	public void doRegister(View view) {
 		// setContentView(textView);
 		//get user name from input
@@ -82,6 +67,8 @@ public class Register extends Activity {
 		// setContentView(textView);
     	//EditText edt_title = (EditText) findViewById(R.id.title);
     	//title = edt_title.getText().toString();
+		title = String.valueOf(titleSp.getSelectedItem());
+
     	
     	//get user name from input
     	EditText edt_firstName = (EditText) findViewById(R.id.firstName);

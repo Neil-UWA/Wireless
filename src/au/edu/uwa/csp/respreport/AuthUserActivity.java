@@ -111,7 +111,8 @@ public class AuthUserActivity extends Activity {
 			
 			// If it's a doctor, go to doctor view.
 			if (patient != null) {
-				if (patient.getTitle().equalsIgnoreCase("doctor")) {
+				String pTitle = patient.getTitle();
+				if (pTitle.contains("Dr")) {
 					intent = new Intent(AuthUserActivity.this,
 							PatientsListGraphActivity.class);
 				} else {
