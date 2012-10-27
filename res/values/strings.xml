@@ -18,13 +18,14 @@
     <string name="title">Title</string>
     <string name="firstName">FirstName</string>
     <string name="lastName">LastName</string>
-    <string name="title_activity_breathing">Breathing</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_patient">PatientActivity</string>
-    <string name="title_activity_graphing">Graphing</string>
-    <string name="title_activity_patients_list_graph">Patients List Graph</string>
+    <string name="title_activity_breathing"></string>
+    <string name="title_activity_patient"></string>
+    <string name="title_activity_graphing"></string>
+    <string name="title_activity_patients_list_graph">Patient Lists</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="title_activity_post_login">Choose Activity</string>
+    <string name="menu_breathing_record">Record Breathing</string>
+    <string name="menu_view_data">View History</string>
 
 </resources>

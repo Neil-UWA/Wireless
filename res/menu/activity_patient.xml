@@ -3,4 +3,10 @@
         android:title="@string/menu_settings"
         android:orderInCategory="100"
         android:showAsAction="never" />
+    <item android:id="@+id/menu_breathing_record"
+        android:title="@string/menu_breathing_record"
+        android:showAsAction="ifRoom|withText" />
+    <item android:id="@+id/menu_view_data"
+        android:title="@string/menu_view_data"
+        android:showAsAction="ifRoom|withText" />
 </menu>

@@ -81,6 +81,9 @@ public class PatientsListGraphActivity extends Activity {
 					GraphingActivity.class);
 			// Put patientId information in the intent to be passed over
 			intent.putExtra("PatientId", patientId);
+			//activity 0 refers to doctor view, while activity 1 refer to patient view
+			int activity = 0;
+			intent.putExtra("Activity", activity);
 			startActivity(intent);
 
 		}
