@@ -91,7 +91,8 @@ public class Register extends Activity {
 			result = ERROR;
 			e.printStackTrace();
 		}
-
+		result+="";
+		
 		// if registration is successful
 		if (result.equalsIgnoreCase("ok")) {
 			// Add a new patient by creating a SOAP task to call the AddPatient
@@ -138,7 +139,8 @@ public class Register extends Activity {
 				startActivity(intent);
 			}
 		} else
-			AppFunctions.alertDialog(result, Register.this);
+			AppFunctions.alertDialog(ERROR+result, Register.this);
+		
 
 	}
 
