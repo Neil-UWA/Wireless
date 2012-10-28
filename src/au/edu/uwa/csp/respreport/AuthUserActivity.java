@@ -77,6 +77,7 @@ public class AuthUserActivity extends Activity {
 			Patient patient = new Patient();
 			pds.open();
 			patient = pds.getPatient(userName);
+			pds.close();
 
 			/*
 			 * if there is no records for this patient in the database, download
