@@ -1,107 +1,175 @@
 <!DOCTYPE html>
-
 <html>
 	<head>
-		<title>Breathing System</title>
-		<style>
+		<title>
+			Breathing System
+		</title>
+		<style type="text/css">
+		body{
+			padding:20px;
+			margin: 20px;
+			background:#abe6ff
+		}
 		.shot{
 			width:200px;
 		}
-		
+
 		#shot1{
 			margin-left:100px;
 		}
-		
+
 		#shot2{
 			margin-left:200px;
 		}
+		h1{
+			text-decoration: underline;
+			text-align: center;
+		}
+		#description > ul{
+			border: 1px solid black;
+			width: 800px;
+		}
 		</style>
 	</head>
-<body style="background-color:#abe6ff">
-	<div id = "description" sytle="height:300px;">
-		<h1>Breathing Rate System</h1><br/>
-		
-		<h3>Description</h3>
-		<hr/>
-		
-		<p>Hate <b>QUEUING</b> in Hospital just for regular breathing rate checking????????</p>
-		<p>This new Breathing Rate System provides a solution for both patients and doctors to avoid the WAITS and QUEUES!!! Patients can just periodically self-record their breathing rate according to their doctors instructions at home or anywhere. Besides that, they could also view their own breathing rate history. On another hand, Doctors can also view all their patients breathing rate without actually meeting the patients directly.</p>
-		<p>This system is designed to be as SIMPLE as possible. It's GUARANTEE to be user friendly and easy to use even for aged people. </p>
-		<p><b><u>Features</u></b>
-		<ul style:"list-style:bullet">
-			<li>Register and Login</li>
-			<li>Patients</li>
+	<body>
+		<div id="description" sytle="height:300px;">
+			<h1>
+				Breathing Rate System
+			</h1><br>
+			<h3>
+				Description
+			</h3>
+			<hr>
+			<p>
+				Hate <b>QUEUING</b> in Hospital just for regular breathing rate checking????????
+			</p>
+			<p>
+				This new Breathing Rate System provides a solution for both patients and doctors to avoid the WAITS and QUEUES!!! Patients can periodically self-record their breathing rate according to their doctors instructions anywhere as long as they have their cellphone. Besides that, they could also view their own breathing rate history. On another hand, Doctors also have easy access to all patients breathing rates, without actually meeting the patients directly.
+			</p>
+			<p>
+				This system was designed to be simple to use and friendly even for aged people.
+			</p>
+			<p>
+				<b><u>Features</u></b>
+			</p>
 			<ul>
-				<li>Record breathing rate using the stopwatch provided</li>
-				<li>View history</li>
+				<li>Register and Login
+				</li>
+				<li>Patients
+				</li>
+				<li style="list-style: none; display: inline">
+					<ul>
+						<li>Record breathing rate using the stopwatch provided
+						</li>
+						<li>View history
+						</li>
+					</ul>
+				</li>
+				<li>Doctors
+				</li>
+				<li style="list-style: none; display: inline">
+					<ul>
+						<li>View all patients
+						</li>
+						<li>View the data for each patient
+						</li>
+					</ul>
+				</li>
 			</ul>
-			<li>Doctors</li>
+			<p>
+				<b><u>Brief User Guide</u></b>
+			</p>
 			<ul>
-				<li>View all patients</li>
-				<li>View the data for each patient</li>
+				<li>Register
+				</li>
+				<li style="list-style: none; display: inline">
+					<ol>
+						<li>Click on register button on the front page
+						</li>
+						<li>Fill in the Title, Username, First Name, Last Name, and Password, and click OK
+						</li>
+					</ol>
+				</li>
+				<li>Login
+				</li>
+				<li style="list-style: none; display: inline">
+					<ol>
+						<li>Click on Login button
+						</li>
+						<li>Fill in using the registered username and password
+						</li>
+					</ol>
+				</li>
+				<li>For Patients
+				</li>
+				<li style="list-style: none; display: inline">
+					<ol>
+						<li>Once login, patient will be redirected to breathing recording page
+						</li>
+						<li>Start the stopwatch to start recording
+						</li>
+						<li>Stop the stopwatch to stop recording
+						</li>
+						<li>Reset the stopwatch to reset the count
+						</li>
+						<li>Once the stopwatch reach 60s, patient can enter their breathing count in the text box specified
+						</li>
+						<li>Click Send once finished
+						</li>
+						<li>Use menu on the top right of the page to go to the view history page and to go back to the breathing recording page
+						</li>
+					</ol>
+				</li>
+				<li>For Doctors
+				</li>
+				<li style="list-style: none; display: inline">
+					<ol>
+						<li>Once login, doctor will be redirected to doctor page that contains list of all patients
+						</li>
+						<li>Click on any patient to view their breathing history
+						</li>
+					</ol>
+				</li>
 			</ul>
-		</ul>
-		</p>
-		<p><b><u>Brief User Guide</u></b></p>
-		<ul>
-		<li>Register</li>
+		</div><br>
+		<div id="what's new">
+			<h3>
+				Future Improvements
+			</h3>
+			<hr>
+			<p>
+				Possible Future Improvements
+			</p>
 			<ol>
-				<li>Click on register button on the front page</li>
-				<li>Fill in the Title, Username, First Name, Last Name, and Password, and click OK</li>
-			</ol>
-		<li>Login</li>
-			<ol>
-				<li>Click on Login button</li>
-				<li>Fill in using the registered username and password</li>
-			</ol>
-		<li>For Patients</li>
-			<ol>
-				<li>Once login, patient will be redirected to breathing recording page</li>
-				<li>Start the stopwatch to start recording</li>
-				<li>Stop the stopwatch to stop recording</li>
-				<li>Reset the stopwatch to reset the count</li>
-				<li>Once the stopwatch reach 60s, patient can enter their breathing count in the text box specified</li>
-				<li>Click Send once finished</li>
-				<li>Use menu on the top right of the page to go to the view history page and to go back to the breathing recording page</li>
-			</ol>
-		<li>For Doctors</li>
-			<ol>
-				<li>Once login, doctor will be redirected to doctor page that contains list of all patients</li>
-				<li>Click on any patient to view their breathing history</li>
-			</ol>
-		</ul>
-		
-	</div>
-	<br/>
-	
-	<div id = "what's new">
-		<h3>What's NEW!!!</h3>
-		<hr/>
-		<p>Possible Future Improvements</p>
-		<ol>
-			<li>More beautiful interface</li>
-			<li>Reminder to record breathing rate for patients</li>
-			<li>Search function for doctors to search from patient lists</li>
-			<li>Time settings and filters for viewing patients data</li>
-			<li>Additional Table view in viewing the data</li>
-			<li>More interactive interface in breathing rate recording</li>
-		</ol>
-	<br/>	
-	</div>
-	<div id = "screen shot">
-		<h3>Screen Shots</h3>
-		<hr/>
-		<div id = "shot1" style="display:block;">
-			<img class ="shot" src="mainpage.png"/>
-			<img class ="shot" src="register.png"/>
-			<img class ="shot" src="login.png"/>
-			<img class ="shot" src="breathing_rec_start.png"/>
+				<li>More beautiful interface
+				</li>
+				<li>Reminder to record breathing rate for patients
+				</li>
+				<li>Search function for doctors to search from patient lists
+				</li>
+				<li>Time settings and filters for viewing patients data
+				</li>
+				<li>Viewing breathing data in a table format
+				</li>
+				<li>More interactive interface in breathing rate recording
+				</li>
+				<li> Option for users to upload their data to a specific doctor
+				</li>
+				<li> Promp doctor to view a specific user's data
+				</li>
+			</ol><br>
 		</div>
-		<div id = "shot2" style="display:block;">
-			<img class ="shot" src="breathing_enter_rate.png"/>
-			<img class ="shot" src="patientlist.png"/>			
-			<img class ="shot" src="respgraph.png"/>
+		<div id="screen shot">
+			<h3>
+				Screenshots
+			</h3>
+			<hr>
+			<div id="shot1" style="display:block;">
+				<img class="shot" src="mainpage.png"> <img class="shot" src="register.png"> <img class="shot" src="login.png"> <img class="shot" src="breathing_rec_start.png">
+			</div>
+			<div id="shot2" style="display:block;">
+				<img class="shot" src="breathing_enter_rate.png"> <img class="shot" src="patientlist.png"> <img class="shot" src="respgraph.png">
+			</div>
 		</div>
-	</div>
-</body>
+	</body>
 </html>
