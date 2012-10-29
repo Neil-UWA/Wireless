@@ -27,5 +27,6 @@
     <string name="title_activity_post_login">Choose Activity</string>
     <string name="menu_breathing_record">Record Breathing</string>
     <string name="menu_view_data">View History</string>
+    <string name="menu_home">Home</string>
 
 </resources>

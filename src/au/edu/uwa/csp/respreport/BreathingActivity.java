@@ -223,7 +223,11 @@ public class BreathingActivity extends Activity {
 	        case R.id.menu_view_data:
 	            intent = new Intent(this, GraphingActivity.class);
 	            startActivity(intent);
-	            return true;   
+	            return true;  
+	        case R.id.menu_home:
+	        	intent = new Intent(this, AuthUserActivity.class);
+	        	startActivity(intent);
+	        	return true;    
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
